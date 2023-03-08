@@ -21,9 +21,53 @@
 
 	<!-- container -->
 	<div class="container">
-		<div class="row">
+		<div class="row mt-5">
 			<div class="col">
 				<h2>Cadastro de Usuario</h2>
+				<div class="card">
+					<div class="card-body">
+						<form action="${pageContext.request.contextPath}/publica?acao=inserir" method="POST">
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-4 col-sm-12 mb-3">
+										<label for="exampleInputEmail1" class="form-label">Nome</label>
+										<input type="text" name="nome" required placeholder="Nome" minlength="3" maxlength="20" class="form-control">
+									</div>
+
+									<div class="col-md-4 col-sm-12 mb-3">
+										<label for="exampleInputEmail1" class="form-label">CPF</label>
+										<input type="text" class="form-control" name="cpf" required placeholder="CPF" minlength="11" maxlength="11">
+									</div>
+
+									<div class="col-md-4 col-sm-12 mb-3">
+										<label for="exampleInputEmail1" class="form-label">Nascimento</label>
+										<input type="text" name="dataNascimento" required="required" class="form-control">
+									</div>
+								</div>
+
+
+								<div class="row">
+									<div class="col-md-4 col-sm-12 mb-3">
+										<label for="exampleInputEmail1" class="form-label">Email</label>
+										<input type="email" class="form-control" name="email" required placeholder="Email" minlength="3" maxlength="50">
+									</div>
+
+									<div class="col-md-4 col-sm-12 mb-3">
+										<label for="exampleInputEmail1" class="form-label">Login</label>
+										<input type="text" class="form-control" name="login" required placeholder="Login" minlength="3" maxlength="50">
+									</div>
+
+									<div class="col-md-4 col-sm-12 mb-3">
+										<label for="exampleInputEmail1" class="form-label">Senha</label>
+										<input type="password" class="form-control" name="senha" required placeholder="Senha" minlength="3" maxlength="50">
+									</div>
+
+								</div>
+
+								<button type="submit" class="btn btn-primary">Salvar</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
