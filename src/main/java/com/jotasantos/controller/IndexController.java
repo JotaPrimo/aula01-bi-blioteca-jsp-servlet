@@ -1,6 +1,7 @@
 package com.jotasantos.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.jotasantos.dao.util.Conexao;
 
 /**
  * Servlet implementation class IndexController
@@ -50,7 +53,17 @@ public class IndexController extends HttpServlet {
 	}
 
 	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException {
+		
+		Connection conexaooJDBC = Conexao.getConexao();
+		
+		if(conexaooJDBC != null) {
+			System.out.println("SIM");
+		}else {
+			System.out.println("Deu merda");
+		}
+		
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/public/public-novo-usuario.jsp");
 		dispatcher.forward(request, response);
 	}
