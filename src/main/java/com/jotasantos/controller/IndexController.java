@@ -2,6 +2,7 @@ package com.jotasantos.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jotasantos.controller.util.ManipulacaoData;
+import com.jotasantos.dao.UsuarioDAO;
 import com.jotasantos.dao.util.Conexao;
 import com.jotasantos.modelo.Usuario;
 
@@ -22,9 +24,15 @@ import com.jotasantos.modelo.Usuario;
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private UsuarioDAO usuarioDAO;
+
 	public IndexController() {
 		super();
 
+	}
+
+	public void init() {
+		usuarioDAO = new UsuarioDAO();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +54,7 @@ public class IndexController extends HttpServlet {
 			case "novo":
 				this.novoUsuario(request, response);
 				break;
-				
+
 			case "inserir":
 				this.gravarUsuario(request, response);
 				break;
@@ -60,31 +68,33 @@ public class IndexController extends HttpServlet {
 	}
 
 	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException {	
-		
-		
+			throws ServletException, IOException, ClassNotFoundException {
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/public/public-novo-usuario.jsp");
 		dispatcher.forward(request, response);
 	}
-	
-	
 
 	protected void gravarUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException {	
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String nome = request.getParameter("nome");
 		String cpf = request.getParameter("cpf");
 		String nascimento = request.getParameter("dataNascimento");
 		String email = request.getParameter("email");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
-		
+
 		ManipulacaoData manipulacaoData = new ManipulacaoData();
 		Date dataNascimento = manipulacaoData.converterStringData(nascimento);
-		
+
 		Usuario usuario = new Usuario(nome, cpf, dataNascimento, email, senha, login, true);
-		System.out.println(usuario);
+		
+		Usuario usuarioGravado =  usuarioDAO.inserirUsuario(usuario);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("public/public-novo-usuario.jsp");
+		request.setAttribute("mensagem", "Usuário cadastrado com sucesso");
+		dispatcher.forward(request, response);
+
+		
 	}
-	
-	
 
 }

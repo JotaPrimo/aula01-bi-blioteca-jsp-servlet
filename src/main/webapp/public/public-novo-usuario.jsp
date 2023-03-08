@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +26,15 @@
 		<div class="row mt-5">
 			<div class="col">
 				<h2>Cadastro de Usuario</h2>
+				
+				<c:if test="${mensagem != null}">
+				 	<div class="alert alert-success alert-dismissible fade show">
+					<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+					<span><c:out value="${mensagem}" /></span>
+				</div>
+				</c:if>	
+				
+				
 				<div class="card">
 					<div class="card-body">
 						<form action="${pageContext.request.contextPath}/publica?acao=inserir" method="POST">
